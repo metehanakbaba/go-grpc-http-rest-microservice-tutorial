@@ -1,0 +1,40 @@
+syntax = "proto3";
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// ToDo Task
+message ToDo {
+    // Benzersiz integer ID
+    int64 id = 1;
+    // Task Basligi ToDo Task iccn
+    string title = 2;
+    // Detayli Aciklama ToDo Task icin
+    string description = 3;
+    // Olusturlacak ToDo Task icin hatirlatma (Tarih/Saat) timestamp formatında
+    google.protobuf.Timestamp reminder = 4;
+}
+
+// Request data yeni ToDo task için
+message CreateRequest{
+    // API Versiyon
+    string api = 1;
+
+    // Olusturulacak Task 
+    ToDo toDo = 2;
+}
+
+// Olusturulan sorgununun Todo Task yaniti
+message CreateResponse{
+     // API Versiyon
+    string api = 1;
+
+    // Olusturulacak task icin ID
+    int64 id = 2;
+}
+
+// ToDo tasklerin servisi
+service ToDoService {
+    // Yeni todo task oluştur
+    rpc Create(CreateRequest) returns (CreateResponse);
+}
