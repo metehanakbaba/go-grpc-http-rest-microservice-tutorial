@@ -15,7 +15,7 @@ message ToDo {
     google.protobuf.Timestamp reminder = 4;
 }
 
-// Request data yeni ToDo task için
+//  ToDo Task icin yeni olusturulacak sorgu
 message CreateRequest{
     // API Versiyon
     string api = 1;
@@ -33,8 +33,78 @@ message CreateResponse{
     int64 id = 2;
 }
 
+message ReadRequest{
+    // API Versiyon
+    string api = 1;
+
+    // Olusturulacak sorgu okuma icin ID
+    int64 id = 2;
+}
+
+message ReadResponse{
+    // API Versiyon
+    string api = 1;
+
+    // Olusturulacak Task 
+    ToDo todo = 2;
+}
+
+message UpdateRequest{
+    // API Versiyon
+    string api = 1;
+
+    // Olusturulacak Task 
+    ToDo todo = 2;
+}
+
+message UpdateResponse{
+    // API Versiyon
+    string api = 1;
+
+    // Güncellenen ToDO sayılarını içerir
+    // Başarılı silme durumunda 1 sonucuna eşittir
+    int64 updated = 2;
+}
+
+message DeleteRequest{
+    // API Versiyon
+    string api = 1;
+
+    int64 id = 2;
+}
+
+
+message DeleteResponse{
+    // API Versiyon
+    string api = 1;
+
+    // Silinen ToDoların sayısını içerir
+    // Başarılı silme durumunda 1 sonucuna eşittir
+    int64 deleted = 2;
+}
+
+message ReadAllRequest{
+    // API Versiyon
+    string api = 1;
+}
+
+message ReadAllResponse{
+    // API Versiyon
+    string api = 1;
+
+    repeated ToDo todos = 2;
+}
+
 // ToDo tasklerin servisi
 service ToDoService {
     // Yeni todo task oluştur
     rpc Create(CreateRequest) returns (CreateResponse);
+
+    rpc Read(ReadRequest) returns (ReadResponse);
+
+    rpc Update(UpdateRequest) returns (UpdateResponse);
+
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+
+    rpc ReadAll(ReadAllRequest) returns (ReadAllResponse);
 }
