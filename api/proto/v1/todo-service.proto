@@ -46,7 +46,7 @@ message ReadResponse{
     string api = 1;
 
     // Olusturulacak Task 
-    ToDo todo = 2;
+    ToDo toDo = 2;
 }
 
 message UpdateRequest{
@@ -54,7 +54,7 @@ message UpdateRequest{
     string api = 1;
 
     // Olusturulacak Task 
-    ToDo todo = 2;
+    ToDo toDo = 2;
 }
 
 message UpdateResponse{
@@ -92,7 +92,7 @@ message ReadAllResponse{
     // API Versiyon
     string api = 1;
 
-    repeated ToDo todos = 2;
+    repeated ToDo toDos = 2;
 }
 
 // ToDo tasklerin servisi
