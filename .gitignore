@@ -11,3 +11,7 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 .idea
+
+# Compiled binary files
+cmd/server/server
+cmd/client-grpc/client-grpc
