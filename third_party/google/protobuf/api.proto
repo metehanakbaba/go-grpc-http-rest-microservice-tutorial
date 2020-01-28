@@ -79,7 +79,7 @@ message Api {
   //
   // The major version is also reflected in the package name of the
   // interface, which must end in `v<major-version>`, as in
-  // `google.feature.v1`. For major versions 0 and 1, the suffix can
+  // `google.feature.api`. For major versions 0 and 1, the suffix can
   // be omitted. Zero major versions must only be used for
   // experimental, non-GA interfaces.
   //
@@ -141,11 +141,11 @@ message Method {
 //
 // Example of a simple mixin:
 //
-//     package google.acl.v1;
+//     package google.acl.api;
 //     service AccessControl {
 //       // Get the underlying ACL object.
 //       rpc GetAcl(GetAclRequest) returns (Acl) {
-//         option (google.api.http).get = "/v1/{resource=**}:getAcl";
+//         option (google.api.http).get = "/api/{resource=**}:getAcl";
 //       }
 //     }
 //
@@ -164,7 +164,7 @@ message Method {
 //     apis:
 //     - name: google.storage.v2.Storage
 //       mixins:
-//       - name: google.acl.v1.AccessControl
+//       - name: google.acl.api.AccessControl
 //
 // The mixin construct implies that all methods in `AccessControl` are
 // also declared with same name and request/response types in
@@ -180,7 +180,7 @@ message Method {
 //       ...
 //     }
 //
-// Note how the version in the path pattern changed from `v1` to `v2`.
+// Note how the version in the path pattern changed from `api` to `v2`.
 //
 // If the `root` field in the mixin is specified, it should be a
 // relative path under which inherited HTTP paths are placed. Example:
@@ -188,7 +188,7 @@ message Method {
 //     apis:
 //     - name: google.storage.v2.Storage
 //       mixins:
-//       - name: google.acl.v1.AccessControl
+//       - name: google.acl.api.AccessControl
 //         root: acls
 //
 // This implies the following inherited HTTP annotation:
