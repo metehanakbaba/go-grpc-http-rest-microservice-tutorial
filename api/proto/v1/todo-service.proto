@@ -17,87 +17,58 @@ message ToDo {
 
 //  ToDo Task icin yeni olusturulacak sorgu
 message CreateRequest{
-    // API Versiyon
-    string api = 1;
-
-    // Olusturulacak Task 
-    ToDo toDo = 2;
+    // Olusturulacak Task
+    ToDo toDo = 1;
 }
 
 // Olusturulan sorgununun Todo Task yaniti
 message CreateResponse{
-     // API Versiyon
-    string api = 1;
-
     // Olusturulacak task icin ID
-    int64 id = 2;
+    int64 id = 1;
 }
 
 message ReadRequest{
-    // API Versiyon
-    string api = 1;
-
     // Olusturulacak sorgu okuma icin ID
-    int64 id = 2;
+    int64 id = 1;
 }
 
 message ReadResponse{
-    // API Versiyon
-    string api = 1;
-
-    // Olusturulacak Task 
-    ToDo toDo = 2;
+    // Olusturulacak Task
+    ToDo toDo = 1;
 }
 
 message UpdateRequest{
-    // API Versiyon
-    string api = 1;
-
-    // Olusturulacak Task 
-    ToDo toDo = 2;
+    // Olusturulacak Task
+    ToDo toDo = 1;
 }
 
 message UpdateResponse{
-    // API Versiyon
-    string api = 1;
-
     // Güncellenen ToDO sayılarını içerir
     // Başarılı silme durumunda 1 sonucuna eşittir
-    int64 updated = 2;
+    int64 updated = 1;
 }
 
 message DeleteRequest{
-    // API Versiyon
-    string api = 1;
-
-    int64 id = 2;
+    int64 id = 1;
 }
 
 
 message DeleteResponse{
-    // API Versiyon
-    string api = 1;
-
     // Silinen ToDoların sayısını içerir
     // Başarılı silme durumunda 1 sonucuna eşittir
-    int64 deleted = 2;
+    int64 deleted = 1;
 }
 
 message ReadAllRequest{
-    // API Versiyon
-    string api = 1;
 }
 
 message ReadAllResponse{
-    // API Versiyon
-    string api = 1;
-
-    repeated ToDo toDos = 2;
+    repeated ToDo toDos = 1;
 }
 
-// ToDo tasklerin servisi
+// ToDo Tasklerin servisi
 service ToDoService {
-    // Yeni todo task oluştur
+
     rpc Create(CreateRequest) returns (CreateResponse);
 
     rpc Read(ReadRequest) returns (ReadResponse);
