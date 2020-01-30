@@ -2,12 +2,40 @@ syntax = "proto3";
 package api;
 
 import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+// Ornek proto:  https://github.com/grpc-ecosystem/grpc-gateway/blob/master/examples/proto/examplepb/a_bit_of_everything.proto
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+	info: {
+        title: "ToDo REST API";
+        version: "1.0";
+        contact: {
+            name: "go-grpc-http-rest-microservice";
+            url: "https://github.com/metehanakbaba/go-grpc-http-rest-microservice-tutorial";
+        };
+    };
+    schemes: HTTP;
+    consumes: "application/json";
+    produces: "application/json";
+    responses: {
+    key: "404";
+    value: {
+        description: "Endpoint bulunamadı.";
+        schema: {
+           json_schema: {
+                    type: STRING;
+                }
+            }
+        }
+    },
+};
 
 // ToDo Task
 message ToDo {
-    // Benzersiz integer ID
+    // Benzersiz integer ID (A_I)
     int64 id = 1;
-    // Task Basligi ToDo Task iccn
+    // Task Basligi ToDo Task icin
     string title = 2;
     // Detayli Aciklama ToDo Task icin
     string description = 3;
@@ -15,15 +43,15 @@ message ToDo {
     google.protobuf.Timestamp reminder = 4;
 }
 
-//  ToDo Task icin yeni olusturulacak sorgu
+//  ToDo Sorgu
 message CreateRequest{
-    // Olusturulacak Task
+    // ToDo Task
     ToDo toDo = 1;
 }
 
-// Olusturulan sorgununun Todo Task yaniti
+// ToDO Yanıt
 message CreateResponse{
-    // Olusturulacak task icin ID
+    // Oluşturulacak task için ID
     int64 id = 1;
 }
 
@@ -68,14 +96,40 @@ message ReadAllResponse{
 
 // ToDo Tasklerin servisi
 service ToDoService {
+    rpc ReadAll(ReadAllRequest) returns (ReadAllResponse){
+        option (google.api.http) = {
+            get: "/api/todo/all"
+        };
+    }
 
-    rpc Create(CreateRequest) returns (CreateResponse);
+    rpc Create(CreateRequest) returns (CreateResponse){
+        option (google.api.http) = {
+            post: "/api/todo"
+            body: "*"
+        };
+    }
 
-    rpc Read(ReadRequest) returns (ReadResponse);
+    rpc Read(ReadRequest) returns (ReadResponse){
+        option (google.api.http) = {
+            get: "/api/todo/{id}"
+        };
+    }
 
-    rpc Update(UpdateRequest) returns (UpdateResponse);
+    rpc Update(UpdateRequest) returns (UpdateResponse){
+        option (google.api.http) = {
+            put: "/api/todo/{toDo.id}"
+            body: "*"
 
-    rpc Delete(DeleteRequest) returns (DeleteResponse);
+            additional_bindings {
+                patch: "/api/todo/{toDo.id}"
+                body: "*"
+            }
+        };
+    }
 
-    rpc ReadAll(ReadAllRequest) returns (ReadAllResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse){
+        option (google.api.http) = {
+            delete: "/api/todo/{id}"
+        };
+    }
 }

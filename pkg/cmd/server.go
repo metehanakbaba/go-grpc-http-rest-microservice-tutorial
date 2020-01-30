@@ -5,11 +5,13 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
+	"log"
 
 	// mysql driver gerekirse orm tercihi yapilir suanlik
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/metehanakbaba/go-grpc-http-rest-microservice-tutorial/pkg/protocol/grpc"
+	"github.com/metehanakbaba/go-grpc-http-rest-microservice-tutorial/pkg/protocol/rest"
 	"github.com/metehanakbaba/go-grpc-http-rest-microservice-tutorial/pkg/service/api"
 )
 
@@ -18,6 +20,9 @@ type Config struct {
 	// gRPC server sunucu baslatma parametreleri
 	// gRPC TCP port
 	GRPCPort string
+
+	// HTTP PORT
+	HTTPPort string
 
 	// MySQL sunucu baslatma parametreleri
 
@@ -33,6 +38,7 @@ func RunServer() error {
 
 	var cfg Config
 	flag.StringVar(&cfg.GRPCPort, "grpc-port", "", "Bind edilecek gRPC port")
+	flag.StringVar(&cfg.HTTPPort, "http-port", "8080", "Bind edilecek HTTP/REST port")
 	flag.StringVar(&cfg.MySQLHost, "mysql-host", "", "MySQL sunucu")
 	flag.StringVar(&cfg.MySQLUser, "mysql-user", "", "MySQL kullanici")
 	flag.StringVar(&cfg.MySQLPassword, "mysql-password", "", "MySQL sifre")
@@ -64,6 +70,12 @@ func RunServer() error {
 	defer db.Close()
 
 	v1API := api.NewToDoServiceServer(db)
+
+	// HTTP gateway calistiralim
+	go func() {
+		err := rest.RunServer(ctx, cfg.GRPCPort, cfg.HTTPPort)
+		log.Fatalf("HTTP/REST gateway baslatamadi: %v", err)
+	}()
 
 	return grpc.RunServer(ctx, v1API, cfg.GRPCPort)
 }

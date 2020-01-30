@@ -60,7 +60,7 @@ CREATE TABLE `ToDo` (
     ##### Örnek komut satırı
     
     ```
-     ./<binary> -grpc-port=<GRPC PORTU> -mysql-host=<MYSQL_SERVER_IP>:<PORT> -mysql-user=<KULLANICI ADI> -mysql-password=<SIFRE> --mysql-schema=<VERITABANI>
+     ./<binary> -grpc-port=<GRPC PORTU> -http-port=<HTTP_PORTU> -mysql-host=<MYSQL_SERVER_IP>:<PORT> -mysql-user=<KULLANICI ADI> -mysql-password=<SIFRE> --mysql-schema=<VERITABANI>
     ```
 - #### gRPC Client
     ```
@@ -73,6 +73,11 @@ CREATE TABLE `ToDo` (
     ```
      ./<binary>  -server=<GRPC_SERVER_IP>:<GRPC_PORT>
     ```  
+
+### Önemli Go Modul Versiyonlari
+
+- GO SDK 1.13.5
+- GRPC 2.2.8
 
 
 ## Referanslar

@@ -1,0 +1,317 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ToDo REST API",
+    "version": "1.0",
+    "contact": {
+      "name": "go-grpc-http-rest-microservice",
+      "url": "https://github.com/metehanakbaba/go-grpc-http-rest-microservice-tutorial"
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/todo": {
+      "post": {
+        "operationId": "Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiCreateResponse"
+            }
+          },
+          "404": {
+            "description": "Endpoint bulunamadı.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    },
+    "/api/todo/all": {
+      "get": {
+        "operationId": "ReadAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiReadAllResponse"
+            }
+          },
+          "404": {
+            "description": "Endpoint bulunamadı.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    },
+    "/api/todo/{id}": {
+      "get": {
+        "operationId": "Read",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiReadResponse"
+            }
+          },
+          "404": {
+            "description": "Endpoint bulunamadı.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Olusturulacak sorgu okuma icin ID",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      },
+      "delete": {
+        "operationId": "Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiDeleteResponse"
+            }
+          },
+          "404": {
+            "description": "Endpoint bulunamadı.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    },
+    "/api/todo/{toDo.id}": {
+      "put": {
+        "operationId": "Update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiUpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Endpoint bulunamadı.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "toDo.id",
+            "description": "Benzersiz integer ID (A_I)",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      },
+      "patch": {
+        "operationId": "Update2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiUpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Endpoint bulunamadı.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "toDo.id",
+            "description": "Benzersiz integer ID (A_I)",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "apiCreateRequest": {
+      "type": "object",
+      "properties": {
+        "toDo": {
+          "$ref": "#/definitions/apiToDo",
+          "title": "ToDo Task"
+        }
+      },
+      "title": "ToDo Sorgu"
+    },
+    "apiCreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Oluşturulacak task için ID"
+        }
+      },
+      "title": "ToDO Yanıt"
+    },
+    "apiDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "deleted": {
+          "type": "string",
+          "format": "int64",
+          "title": "Silinen ToDoların sayısını içerir\nBaşarılı silme durumunda 1 sonucuna eşittir"
+        }
+      }
+    },
+    "apiReadAllResponse": {
+      "type": "object",
+      "properties": {
+        "toDos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiToDo"
+          }
+        }
+      }
+    },
+    "apiReadResponse": {
+      "type": "object",
+      "properties": {
+        "toDo": {
+          "$ref": "#/definitions/apiToDo",
+          "title": "Olusturulacak Task"
+        }
+      }
+    },
+    "apiToDo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Benzersiz integer ID (A_I)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Task Basligi ToDo Task icin"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detayli Aciklama ToDo Task icin"
+        },
+        "reminder": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Olusturlacak ToDo Task icin hatirlatma (Tarih/Saat) timestamp formatında"
+        }
+      },
+      "title": "ToDo Task"
+    },
+    "apiUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "toDo": {
+          "$ref": "#/definitions/apiToDo",
+          "title": "Olusturulacak Task"
+        }
+      }
+    },
+    "apiUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "updated": {
+          "type": "string",
+          "format": "int64",
+          "title": "Güncellenen ToDO sayılarını içerir\nBaşarılı silme durumunda 1 sonucuna eşittir"
+        }
+      }
+    }
+  }
+}
